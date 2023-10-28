@@ -3,16 +3,16 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-dotenv.config();  // Memuat variabel lingkungan dari file .env
+dotenv.config(); 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
 // Inisialisasi Payload
-const payload = require('payload');  // Pastikan Anda telah menginstal Payload sesuai dengan dokumentasi resmi
+const payload = require('payload'); 
 payload.init({
-  secret: process.env.PAYLOAD_SECRET, // Use your Payload secret from the .env file
+  secret: process.env.PAYLOAD_SECRET, 
   express: app,
   onInit: async () => {
     console.log(`Payload Admin URL: ${payload.getAdminURL()}`);

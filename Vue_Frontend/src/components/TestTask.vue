@@ -8,7 +8,6 @@
         </div>
         <!-- form -->
         <div class="form">
-          <!-- Menggunakan v-model untuk mengikat input dengan data 'newTask' -->
           <input type="text" placeholder="New Task" v-model="newTask" />
           <!-- Menggunakan <select> untuk memilih kategori -->
           <select v-model="newCategory" class="category-select">
@@ -19,7 +18,6 @@
             <option value="Events and Holidays">Events and Holidays</option>
             <option value="Routine Tasks">Routine Tasks</option>
           </select>
-          <!-- Menggunakan @click untuk menambahkan tugas saat tombol "Tambah" diklik -->
           <button @click="addTask"><i class="fas fa-plus"></i></button>
         </div>
         <!-- task lists -->
@@ -28,7 +26,6 @@
             <!-- Loop melalui array tasks dan menampilkan setiap tugas -->
             <li v-for="task in tasks" :key="task.id">
               <button @click="toggleCompleted(task.id)">
-                <!-- Menggunakan ikon cek atau centang jika tugas selesai -->
                 <i
                   class="far"
                   :class="{
@@ -38,8 +35,6 @@
                 ></i>
               </button>
               {{ task.title }} (Category: {{ task.category }})
-              <!-- Menampilkan kategori -->
-              <!-- Menggunakan @click untuk menghapus tugas saat tombol "Hapus" diklik -->
               <button @click="deleteTask(task.id)">
                 <i class="far fa-trash-alt"></i>
               </button>
@@ -48,9 +43,7 @@
         </div>
         <!-- buttons -->
         <div class="clearBtns">
-          <!-- Menggunakan @click untuk menjalankan metode clearCompleted saat tombol "Clear Completed" diklik -->
           <button @click="clearCompleted">Clear completed</button>
-          <!-- Menggunakan @click untuk menjalankan metode clearAll saat tombol "Clear All" diklik -->
           <button @click="clearAll">Clear all</button>
         </div>
         <!-- pending task -->
@@ -91,7 +84,7 @@ export default {
         };
 
         try {
-          const response = await axios.post('http://localhost:3000/api/todo', newTask); // Use Axios for POST request
+          const response = await axios.post('http://localhost:3000/api/todo', newTask);
 
           if (response.status === 200) {
             console.log('Task created:', response.data);
@@ -107,7 +100,7 @@ export default {
     },
     async getTodos() {
       try {
-        const response = await axios.get('http://localhost:3000/api/todo'); // Use Axios for GET request
+        const response = await axios.get('http://localhost:3000/api/todo'); 
         this.tasks = response.data;
       } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -119,7 +112,7 @@ export default {
         task.completed = !task.completed;
 
         try {
-          const response = await axios.put(`http://localhost:3000/api/todo/${taskId}`, task); // Use Axios for PUT request
+          const response = await axios.put(`http://localhost:3000/api/todo/${taskId}`, task); 
           if (response.status === 200) {
             console.log('Task updated:', response.data);
           }
@@ -130,7 +123,7 @@ export default {
     },
     async deleteTask(taskId) {
       try {
-        const response = await axios.delete(`http://localhost:3000/api/todo/${taskId}`); // Use Axios for DELETE request
+        const response = await axios.delete(`http://localhost:3000/api/todo/${taskId}`); 
         if (response.status === 200) {
           console.log('Task deleted:', taskId);
           this.tasks = this.tasks.filter((task) => task.id !== taskId);
@@ -143,7 +136,7 @@ export default {
       const completedTasks = this.tasks.filter((task) => task.completed);
       for (const task of completedTasks) {
         try {
-          await axios.delete(`http://localhost:3000/api/todo/${task.id}`); // Use Axios for DELETE request
+          await axios.delete(`http://localhost:3000/api/todo/${task.id}`); 
           console.log('Task cleared:', task.id);
           this.tasks = this.tasks.filter((t) => t.id !== task.id);
         } catch (error) {
@@ -153,7 +146,7 @@ export default {
     },
     async clearAll() {
       try {
-        await axios.delete('http://localhost:3000/api/todo'); // Use Axios for DELETE request
+        await axios.delete('http://localhost:3000/api/todo'); 
         console.log('All tasks cleared');
         this.tasks = [];
       } catch (error) {
@@ -187,6 +180,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Sesuaikan tinggi sesuai kebutuhan */
+  height: 100vh;
 }
 </style>
